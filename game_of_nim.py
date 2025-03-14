@@ -5,7 +5,7 @@ class GameOfNim(Game):
         self.initial = GameState(
             to_move='MAX',
             utility=0,
-            board=initial_board,
+            state=initial_board,  # Changed from 'board' to 'state'
             moves=self.compute_moves(initial_board)
         )
 
@@ -22,7 +22,7 @@ class GameOfNim(Game):
 
     def result(self, state, move):
         r, n = move
-        new_board = state.board.copy()
+        new_board = state.state.copy()  # Access 'state' attribute
         new_board[r] -= n
 
         next_player = 'MIN' if state.to_move == 'MAX' else 'MAX'
@@ -36,15 +36,15 @@ class GameOfNim(Game):
         return GameState(
             to_move=next_player,
             utility=new_utility,
-            board=new_board,
+            state=new_board,  # Changed to 'state'
             moves=new_moves
         )
 
     def terminal_test(self, state):
-        return sum(state.board) == 0
+        return sum(state.state) == 0  # Access 'state' attribute
 
     def utility(self, state, player):
         return state.utility if player == 'MAX' else -state.utility
 
     def display(self, state):
-        print("board: ", state.board)
+        print("board: ", state.state)  # Access 'state' attribute
